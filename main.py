@@ -43,3 +43,4 @@ def keep_alive_loop():
 
 # Démarrage du keep-alive dès le lancement de l'app
 threading.Thread(target=keep_alive_loop, daemon=True).start()
+# redeploy trigger by Roman 🧠
