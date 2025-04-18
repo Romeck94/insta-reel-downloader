@@ -5,10 +5,12 @@ import time
 
 app = FastAPI()
 
+# ✅ Route GET pour vérifier que le serveur répond
 @app.get("/")
 def read_root():
     return {"status": "online 🚀"}
 
+# ✅ Route POST pour télécharger un reel
 @app.post("/download")
 async def download_video(request: Request):
     print("✅ Requête POST reçue sur /download")
@@ -34,9 +36,11 @@ async def download_video(request: Request):
         print(f"❌ Erreur : {e}")
         return {"status": "error", "details": str(e)}
 
+# 🔁 Keep Alive thread pour empêcher Render de s'endormir
 def keep_alive_loop():
     while True:
         print("⏳ Keep alive actif...")
         time.sleep(60)
 
+# 🟢 Lancer le keep-alive dès le démarrage
 threading.Thread(target=keep_alive_loop, daemon=True).start()
