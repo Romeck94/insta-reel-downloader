@@ -56,3 +56,15 @@ def keep_alive_loop():
 
 # 🟢 Lancer le keep-alive dès le démarrage
 threading.Thread(target=keep_alive_loop, daemon=True).start()
+
+# ✅ Route pour vérifier si un fichier existe
+@app.get("/check_file/{file_name}")
+def check_file(file_name: str):
+    # Chemin complet du fichier sur le serveur Render
+    file_path = f"/opt/render/project/src/{file_name}"  # Remplace par le chemin correct du fichier sur ton serveur
+    
+    # Vérifie si le fichier existe
+    if os.path.exists(file_path):
+        return {"status": "success", "message": f"Le fichier {file_name} existe.", "file_path": file_path}
+    else:
+        return {"status": "error", "message": f"Le fichier {file_name} n'existe pas."}
