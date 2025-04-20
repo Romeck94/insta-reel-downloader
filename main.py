@@ -77,6 +77,8 @@ async def download_video(file_name: str):
     
     # Vérifie si le fichier existe avant de l'envoyer
     if os.path.exists(file_path):
+        print(f"📁 Fichier trouvé : {file_path}")
         return FileResponse(file_path, media_type='video/mp4', filename=file_name)
     else:
+        print(f"❌ Fichier non trouvé : {file_path}")
         return {"status": "error", "message": f"Le fichier {file_name} n'existe pas."}
