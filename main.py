@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from fastapi.responses import FileResponse
 import subprocess
 import threading
 import time
@@ -66,5 +67,16 @@ def check_file(file_name: str):
     # Vérifie si le fichier existe
     if os.path.exists(file_path):
         return {"status": "success", "message": f"Le fichier {file_name} existe.", "file_path": file_path}
+    else:
+        return {"status": "error", "message": f"Le fichier {file_name} n'existe pas."}
+
+# ✅ Route pour télécharger un fichier vidéo
+@app.get("/download_video/{file_name}")
+async def download_video(file_name: str):
+    file_path = f"/opt/render/project/src/{file_name}"  # Remplace par le chemin correct du fichier sur ton serveur
+    
+    # Vérifie si le fichier existe avant de l'envoyer
+    if os.path.exists(file_path):
+        return FileResponse(file_path, media_type='video/mp4', filename=file_name)
     else:
         return {"status": "error", "message": f"Le fichier {file_name} n'existe pas."}
